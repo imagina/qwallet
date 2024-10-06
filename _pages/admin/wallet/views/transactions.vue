@@ -53,19 +53,19 @@ export default defineComponent({
           format: val => val ?? '-'
         },
         {
+          name: 'createdAt',
+          label: 'createdAt',
+          field: 'createdAt',
+          align: 'left',
+          format: val => this.$trd(val)
+        },
+        {
           name: 'comment',
           label: 'comment',
           field: 'comment',
           align: 'left',
           style: 'max-width : 250px',
           format: val => val ?? '-'
-        },
-        {
-          name: 'createdAt',
-          label: 'createdAt',
-          field: 'createdAt',
-          align: 'left',
-          format: val => this.$trd(val)
         }
       ]
     };

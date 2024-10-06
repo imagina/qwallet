@@ -5,7 +5,7 @@ export default {
     authenticated: true,
     path: '/wallet/pockets/index',
     name: 'qwallet.admin.pockets',
-    page: () => import('modules/qwallet/_pages/admin/pocket'),
+    page: () => import('modules/qwallet/_pages/admin/wallet'),
     layout: () => import('layouts/master.vue'),
     title: 'iwallet.cms.sidebar.adminPockets',
     icon: 'fa-light fa-newspaper'

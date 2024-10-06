@@ -13,10 +13,10 @@
 </template>
 <script lang="ts">
 import { defineComponent, provide } from 'vue';
-import controller from 'modules/qwallet/_pages/admin/pocket/controller';
+import controller from './controller';
 //Components
-import pockets from 'modules/qwallet/_pages/admin/pocket/views/pockets.vue';
-import transactions from 'modules/qwallet/_pages/admin/pocket/views/transactions.vue';
+import pockets from './views/pockets.vue';
+import transactions from './views/transactions.vue';
 
 export default defineComponent({
   props: {},

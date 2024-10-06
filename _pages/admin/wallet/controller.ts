@@ -1,6 +1,6 @@
 import { computed, reactive, ref, onMounted, toRefs, watch, getCurrentInstance } from 'vue';
-import service from 'modules/qwallet/_pages/admin/pocket/services';
-import store from 'modules/qwallet/_pages/admin/pocket/store';
+import service from './services';
+import store from './store';
 
 export default function controller (props: any, emit: any)
 {
@@ -32,11 +32,6 @@ export default function controller (props: any, emit: any)
         label: '(pt) Transaction'
       }
     },
-    pockets: [
-      { id: 1, name: 'Savings', total: 1500, color: '#202528', icon: 'fab fa-bitcoin', entry: 15000, output: 2500 },
-      { id: 2, name: 'Expenses', total: -20000, color: '#202528', icon: 'fab fa-bitcoin', entry: 15000, output: 16000 },
-      { id: 3, name: 'Investment', total: 3200, color: '#202528', icon: 'fab fa-bitcoin', entry: 15000, output: 2500 }
-    ],
     transactions: [
       {
         value: 1500,

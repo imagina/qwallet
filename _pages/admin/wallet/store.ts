@@ -1,5 +1,5 @@
 import {computed, reactive} from "vue";
-//import {StateKeyInterface} from 'modules/qwallet/_pages/admin/pocket/interface'
+//import {StateKeyInterface} from 'modules/qwallet/_pages/admin/wallet/interface'
 
 interface StateInterface {
   //stateKey: StateKeyInterface[]
