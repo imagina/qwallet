@@ -6,7 +6,8 @@
         <pockets />
       </div>
       <div class="col-8">
-        <transactions />
+        <crud :crud-data="import('modules/qwallet/_crud/transactions.vue')"
+              @created="getPockets" @updated="getPockets" @deleted="getPockets" />
       </div>
     </div>
   </div>
@@ -16,11 +17,10 @@ import { defineComponent, provide } from 'vue';
 import controller from './controller';
 //Components
 import pockets from './views/pockets.vue';
-import transactions from './views/transactions.vue';
 
 export default defineComponent({
   props: {},
-  components: { pockets, transactions },
+  components: { pockets },
   setup (props, { emit })
   {
     // Initialize the controller instance

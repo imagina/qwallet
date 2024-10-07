@@ -48,15 +48,15 @@
         </div>
       </div>
       <!--Empty-->
-      <div v-if="!pockets.length && !loading" class="text-center full-width">
+      <div v-if="!pockets.length && !loadingPockets" class="text-center full-width">
         <not-result />
       </div>
       <!-- Inner loading -->
-      <inner-loading :visible="loading" />
+      <inner-loading :visible="loadingPockets" />
     </div>
     <!--  Pocket Crud -->
     <crud :crud-data="import('modules/qwallet/_crud/pockets.vue')" type="onlyUpdate"
-          ref="crudPockets" @created="getPockets" @updated="getPockets" />
+          ref="crudPockets" @created="getPockets" @updated="getPockets" @deleted="getPockets" />
   </div>
 </template>
 
@@ -69,36 +69,12 @@ export default defineComponent({
     // Inject the controller from the parent
     return inject('controller');
   },
-  mounted() {
-    this.$nextTick(function() {
-      this.init();
-    });
-  },
-  computed: {
-    mappedPockets() {
-      return this.pockets.map(pocket => ({
-        ...pocket,
-        balance: pocket.entry - pocket.output
-      }));
-    }
-  },
+  computed: {  },
   data() {
     return {
-      loading: false,
-      pockets: []
     };
   },
   methods: {
-    init() {
-      this.getPockets();
-    },
-    getPockets() {
-      this.loading = true;
-      service.getPockets().then(response => {
-        this.pockets = response.data;
-        this.loading = false;
-      }).catch(error => this.loading = false);
-    }
   }
 });
 </script>

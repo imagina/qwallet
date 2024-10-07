@@ -13,62 +13,8 @@ export default function controller (props: any, emit: any)
 
   // States
   const state = reactive({
-    selectedPocket: null,
-    transactionDialog: false,
-    types: {
-      positive: {
-        color: 'green',
-        icon: 'fa-solid fa-arrow-up',
-        label: '(pt) Entry'
-      },
-      negative: {
-        color: 'red',
-        icon: 'fa-solid fa-arrow-down',
-        label: '(pt) Output'
-      },
-      transaction: {
-        color: 'indigo',
-        icon: 'fa-solid fa-exchange-alt',
-        label: '(pt) Transaction'
-      }
-    },
-    transactions: [
-      {
-        value: 1500,
-        createdAt: '2024-10-04T10:30:00',
-        fromPocketName: null,
-        toPocketName: 'Expenses',
-        comment: 'Monthly rent payment'
-      },
-      {
-        value: 250,
-        createdAt: '2024-10-03T15:00:00',
-        fromPocketName: 'Savings',
-        toPocketName: null,
-        comment: 'Grocery shopping at supermarket'
-      },
-      {
-        value: 500,
-        createdAt: '2024-10-02T09:45:00',
-        fromPocketName: 'Income',
-        toPocketName: null,
-        comment: 'Salary deposit'
-      },
-      {
-        value: 120,
-        createdAt: '2024-10-01T18:20:00',
-        fromPocketName: 'Savings',
-        toPocketName: 'Entertainment',
-        comment: 'Movie tickets for the family'
-      },
-      {
-        value: 3000,
-        createdAt: '2024-09-30T13:15:00',
-        fromPocketName: null,
-        toPocketName: 'Savings',
-        comment: 'Freelance project payment'
-      }
-    ]
+    pockets: [],
+    loadingPockets: false
   });
 
   // Computed
@@ -76,17 +22,21 @@ export default function controller (props: any, emit: any)
 
   // Methods
   const methods = {
-    // methodKey: () => {}
-    toggleTransactionHistory: (pocketId) =>
+    getPockets: () =>
     {
-      state.selectedPocket = state.pockets.find(pocket => pocket.id === pocketId);
-      state.transactionDialog = true;
+      state.loadingPockets = true;
+      service.getPockets(true).then(response =>
+      {
+        state.pockets = response.data;
+        state.loadingPockets = false;
+      }).catch(error => state.loadingPockets = false);
     }
   };
 
   // Mounted
   onMounted(() =>
   {
+    methods.getPockets();
   });
 
   // Watch
