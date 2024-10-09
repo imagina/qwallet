@@ -50,7 +50,7 @@ export default {
             type: 'inputColor',
             isFakeField: true,
             props: {
-              label: this.$tr('isite.cms.form.color')
+              label: this.$tr('isite.cms.label.color')
             }
           },
           assignedToId: {

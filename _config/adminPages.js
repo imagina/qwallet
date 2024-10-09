@@ -8,6 +8,6 @@ export default {
     page: () => import('modules/qwallet/_pages/admin/wallet'),
     layout: () => import('layouts/master.vue'),
     title: 'iwallet.cms.sidebar.adminPockets',
-    icon: 'fa-light fa-newspaper'
+    icon: 'fa-light fa-wallet'
   }
 }

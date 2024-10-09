@@ -1,11 +1,18 @@
 <template>
   <div id="pocketsView">
     <div class="row q-gutter-md relative-position">
-      <!-- New Pocket -->
-      <div class="new-pocket box" @click="$refs.crudPockets.create()">
-        <div>
-          <q-icon name="fa-solid fa-plus" class="q-mr-sm" />
-          (pt) New Pocket
+      <!-- Actions -->
+      <div class="row justify-between items-center" style="width: 100%">
+        <div class="text-primary text-bold" style="font-size: 20px">
+          {{$trp('iwallet.cms.pocket')}}
+        </div>
+        <div class="row q-gutter-sm">
+          <q-btn @click="$refs.crudPockets.create()" v-bind="buttonProps" padding="5px 15px">
+            <q-icon name="fa-solid fa-plus" class="q-mr-sm" />
+            {{$tr('isite.cms.label.new')}}
+          </q-btn>
+          <q-btn @click="getPockets" icon="fal fa-rotate-right" v-bind="buttonProps"
+                 padding="10px" />
         </div>
       </div>
       <!-- Pockets -->
@@ -62,20 +69,28 @@
 
 <script>
 import { computed, defineComponent, inject } from 'vue';
-import service from 'modules/qwallet/_pages/admin/wallet/services';
 
 export default defineComponent({
   setup(props) {
     // Inject the controller from the parent
     return inject('controller');
   },
-  computed: {  },
+  computed: {},
   data() {
     return {
+      buttonProps: {
+        round: false,
+        rounded: true,
+        dense: true,
+        unelevated: true,
+        textColor: 'primary',
+        style: 'border: 1px solid rgb(229 229 229)', //text-neutral-200
+        noCaps: true,
+        class: 'btn-small'
+      }
     };
   },
-  methods: {
-  }
+  methods: {}
 });
 </script>
 

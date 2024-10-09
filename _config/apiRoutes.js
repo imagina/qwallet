@@ -8,5 +8,6 @@ export default {
   version: moduleVersion,
   transactions: `${urlBase}/transactions`,
   pockets: `${urlBase}/pockets`,
-  types: `${urlBase}/types`
+  types: `${urlBase}/types`,
+  statuses: `${urlBase}/statuses`
 };

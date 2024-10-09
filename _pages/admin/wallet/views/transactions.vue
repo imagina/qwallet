@@ -1,20 +1,33 @@
-<template></template>
+<template>
+  <div id="transactionsView">
+    <!--Dynamic List-->
+    <dynamic-list :list-config="listConfig" @new="$refs.transactionCrud.create()"
+                  ref="transactionList" @updatedRow="getPockets" />
+    <!-- Transacton CRUD -->
+    <crud :crud-data="import('modules/qwallet/_crud/transactions')"
+          type="onlyform" ref="transactionCrud"
+          @created="$refs.transactionList.getData({page: 1}), getPockets()" />
+  </div>
+</template>
+
 <script>
-export default {
+import { defineComponent, inject } from 'vue';
+import dynamicList from 'modules/qsite/_components/master/dynamicList';
+
+export default defineComponent({
+  components: { dynamicList },
+  setup(props) {
+    // Inject the controller from the parent
+    return inject('controller');
+  },
+  computed: {},
   data() {
     return {
-      crudId: this.$uid()
-    };
-  },
-  computed: {
-    crudData() {
-      return {
-        crudId: this.crudId,
+      listConfig: {
         apiRoute: 'apiRoutes.qwallet.transactions',
         permission: 'iwallet.transactions',
-        extraFormFields: 'Iwallet.crud-fields.transactions',
-        create: {
-          title: this.$tr('iwallet.cms.newTransaction')
+        pageActions: {
+          extraActions: ['new']
         },
         read: {
           title: this.$trp('iwallet.cms.transaction'),
@@ -22,10 +35,10 @@ export default {
             { name: 'id', field: 'id', label: 'ID' },
             {
               name: 'type',
-              label: '(pt) Type',
+              label: this.$tr('isite.cms.form.type'),
               field: 'type',
               align: 'left',
-              format: val => `<i class="${val.icon}" style="color: ${val.color}" /> <span>${val.label}</span>`
+              format: val => `<i class="${val.icon}" style="color: ${val.color}" /> <span class="q-ml-sm">${val.title}</span>`
             },
             {
               name: 'amount',
@@ -49,6 +62,24 @@ export default {
               format: val => val?.title ?? '-'
             },
             {
+              name: 'status',
+              label: this.$tr('isite.cms.form.status'),
+              field: 'status',
+              align: 'left',
+              isEditable: false,
+              format: val => `<i class="${val.icon}" style="color: ${val.color}" /> <span>${val.title}</span>`,
+              dynamicField: {
+                name: 'statusId',
+                type: 'select',
+                props: {
+                  label: this.$tr('isite.cms.form.status')
+                },
+                loadOptions: {
+                  apiRoute: 'apiRoutes.qwallet.statuses'
+                }
+              }
+            },
+            {
               name: 'comment',
               label: this.$tr('isite.cms.label.comment'),
               field: 'comment',
@@ -64,9 +95,6 @@ export default {
               format: val => this.$trd(val)
             }
           ],
-          search: false,
-          allowToggleView: false,
-          excludeActions: ['sync', 'export', 'tour'],
           requestParams: { include: 'fromPocket,toPocket' },
           filters: {
             date: {
@@ -103,64 +131,16 @@ export default {
               }
             }
           }
-        },
-        update: {
-          title: this.$tr('iwallet.cms.updateTransaction'),
-          requestParams: { include: 'fromPocket,toPocket' }
-        },
-        delete: false,
-        formLeft: {
-          id: { value: '' },
-          userId: { value: this.$store.state.quserAuth.userId },
-          fromPocketId: {
-            value: null,
-            type: 'select',
-            props: {
-              label: this.$tr('iwallet.cms.origin'),
-              clearable: true
-            },
-            loadOptions: {
-              apiRoute: 'apiRoutes.qwallet.pockets',
-              select: { id: 'id', label: row => `${row.title} ($${this.$trn(row.total)})` }
-            }
-          },
-          toPocketId: {
-            value: null,
-            type: 'select',
-            props: {
-              label: this.$tr('iwallet.cms.destination'),
-              clearable: true
-            },
-            loadOptions: {
-              apiRoute: 'apiRoutes.qwallet.pockets',
-              select: { id: 'id', label: row => `${row.title} ($${this.$trn(row.total)})` }
-            }
-          },
-          amount: {
-            value: null,
-            type: 'input',
-            required: true,
-            props: {
-              label: this.$tr('isite.cms.label.amount') + '*',
-              type: 'number'
-            }
-          },
-          comment: {
-            value: null,
-            type: 'input',
-            props: {
-              label: this.$tr('isite.cms.label.comment'),
-              type: 'textarea',
-              rows: '3'
-            }
-          }
         }
-      };
-    },
-    //Crud info
-    crudInfo() {
-      return this.$store.state.qcrudComponent.component[this.crudId] || {};
-    }
-  }
-};
+      }
+    };
+  },
+  methods: {}
+});
 </script>
+
+<style lang="scss">
+#transactionsView {
+
+}
+</style>
