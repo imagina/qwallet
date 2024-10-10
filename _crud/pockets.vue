@@ -53,7 +53,7 @@ export default {
               label: this.$tr('isite.cms.label.color')
             }
           },
-          assignedToId: {
+          entityId: {
             value: '',
             type: 'select',
             props: {
@@ -75,6 +75,12 @@ export default {
               rows: '3'
             }
           }
+        },
+        getDataForm: (data) => {
+          return new Promise((resolve, reject) => {
+            if (data.entityId) data.entityType = 'Modules\\User\\Entities\\Sentinel\\User';
+            resolve(data);
+          });
         }
       };
     },

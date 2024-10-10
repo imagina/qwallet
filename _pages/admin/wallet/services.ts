@@ -6,7 +6,7 @@ export default {
     return new Promise((resolve, reject) =>
     {
       const requestParams = {
-        refresh, params: { include: 'assignedTo' }
+        refresh, params: {}
       };
       //Request
       baseService.index('apiRoutes.qwallet.pockets', requestParams).then(response =>
