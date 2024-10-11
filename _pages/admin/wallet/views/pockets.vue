@@ -24,7 +24,7 @@
             <div class="text-h6">${{ $trn(pocket.total) }}</div>
           </div>
           <div class="pocket__top-icon row items-center justify-center"
-               :style="`background-color: ${pocket.options.color}`">
+               :style="`background-color: ${pocket.options?.color ?? '#0b5f91'}`">
             <q-icon name="far fa-wallet" />
           </div>
         </div>
