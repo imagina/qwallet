@@ -2,10 +2,10 @@
   <div id="pocketPage">
     <div class="row q-col-gutter-lg">
       <!-- Pockets -->
-      <div class="col-4">
+      <div class="col-12 col-md-4">
         <pockets />
       </div>
-      <div class="col-8">
+      <div class="col-12 col-md-8">
         <transactions />
       </div>
     </div>

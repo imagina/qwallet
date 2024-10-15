@@ -4,12 +4,13 @@
       <!-- Actions -->
       <div class="row justify-between items-center" style="width: 100%">
         <div class="text-primary text-bold" style="font-size: 20px">
-          {{$trp('iwallet.cms.pocket')}}
+          {{ $trp('iwallet.cms.pocket') }}
         </div>
         <div class="row q-gutter-sm">
-          <q-btn @click="$refs.crudPockets.create()" v-bind="buttonProps" padding="5px 15px">
+          <q-btn @click="$refs.crudPockets.create()" v-bind="buttonProps" padding="5px 15px"
+                 v-if="can.create">
             <q-icon name="fa-solid fa-plus" class="q-mr-sm" />
-            {{$tr('isite.cms.label.new')}}
+            {{ $tr('isite.cms.label.new') }}
           </q-btn>
           <q-btn @click="getPockets" icon="fal fa-rotate-right" v-bind="buttonProps"
                  padding="10px" />
@@ -43,11 +44,11 @@
             <!--Actions-->
             <div class="row q-gutter-xs">
               <q-btn icon="fas fa-trash" flat color="blue-grey-3" size="xs" round
-                     @click="$refs.crudPockets.delete(pocket)">
+                     @click="$refs.crudPockets.delete(pocket)" v-if="can.destroy">
                 <q-tooltip>(pt) Eliminar</q-tooltip>
               </q-btn>
               <q-btn icon="fas fa-pen" flat color="blue-grey-3" size="xs" round
-                     @click="$refs.crudPockets.update(pocket)">
+                     @click="$refs.crudPockets.update(pocket)" v-if="can.edit">
                 <q-tooltip>(pt) Editar</q-tooltip>
               </q-btn>
             </div>
@@ -78,6 +79,11 @@ export default defineComponent({
   computed: {},
   data() {
     return {
+      can: {
+        create: this.$hasAccess('iwallet.pockets.create'),
+        edit: this.$hasAccess('iwallet.pockets.edit'),
+        destroy: this.$hasAccess('iwallet.pockets.destroy')
+      },
       buttonProps: {
         round: false,
         rounded: true,

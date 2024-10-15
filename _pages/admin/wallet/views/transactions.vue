@@ -27,7 +27,7 @@ export default defineComponent({
         apiRoute: 'apiRoutes.qwallet.transactions',
         permission: 'iwallet.transactions',
         pageActions: {
-          extraActions: ['new']
+          extraActions: this.$hasAccess('iwallet.transactions.create') ? ['new'] : []
         },
         read: {
           title: this.$trp('iwallet.cms.transaction'),
@@ -68,14 +68,17 @@ export default defineComponent({
               align: 'left',
               isEditable: false,
               format: val => `<i class="${val.icon}" style="color: ${val.color}" /> <span>${val.title}</span>`,
-              dynamicField: {
-                name: 'statusId',
-                type: 'select',
-                props: {
-                  label: this.$tr('isite.cms.form.status')
-                },
-                loadOptions: {
-                  apiRoute: 'apiRoutes.qwallet.statuses'
+              dynamicField: row => {
+                if(!this.$hasAccess('iwallet.transactions.edit')) return null
+                return {
+                  name: 'statusId',
+                  type: 'select',
+                  props: {
+                    label: this.$tr('isite.cms.form.status')
+                  },
+                  loadOptions: {
+                    apiRoute: 'apiRoutes.qwallet.statuses'
+                  }
                 }
               }
             },
