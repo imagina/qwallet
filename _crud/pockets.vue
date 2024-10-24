@@ -16,10 +16,35 @@ export default {
         create: {
           title: this.$tr('iwallet.cms.newPocket')
         },
-        read: {},
+        read: {
+          showAs: 'grid',
+          columns: [
+            { name: 'id', label: this.$tr('isite.cms.form.id'), field: 'id', style: 'width: 50px' },
+            { name: 'title', label: this.$tr('isite.cms.form.title'), field: 'title', align: 'rigth' },
+            {
+              name: 'type', label: this.$tr('isite.cms.form.type'), field: 'type',
+              align: 'left', format: val => `<div style="color: ${val.color}">` +
+                `<q-icon name="${val.icon}" />` + val.title + '</div>'
+            },
+            {
+              name: 'total', label: 'Total', field: 'total',
+              format: val => '$' + this.$trn(val), align: 'left'
+            },
+            {
+              name: 'created_at', label: this.$tr('isite.cms.form.createdAt'), field: 'createdAt', align: 'left',
+              format: val => val ? this.$trd(val) : '-'
+            },
+            { name: 'actions', label: this.$tr('isite.cms.form.actions'), align: 'left' }
+          ],
+          requestParams: {
+            order : {field : 'id', way : 'asc'}
+          },
+          grid : {
+            component: () => import('modules/qwallet/_components/pocketCard')
+          }
+        },
         update: {
           title: this.$tr('iwallet.cms.updatePocket')
-          //requestParams: {include: 'type'}
         },
         delete: true,
         formLeft: {

@@ -2,7 +2,9 @@ export default {
   'iwallet': {
     'cms': {
       'sidebar': {
-        'adminPockets': 'Wallet'
+        'adminGroup': 'Wallet',
+        'adminPockets': 'Pockets',
+        'adminTransactions': 'Transactions'
       },
       'newPocket': 'New Pocket',
       'updatePocket': 'Update Pocket',
