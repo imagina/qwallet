@@ -1,5 +1,7 @@
 <template></template>
 <script>
+import { i18n } from '../../../plugins/utils';
+
 export default {
   data() {
     return {
@@ -41,6 +43,19 @@ export default {
           },
           grid : {
             component: () => import('modules/qwallet/_components/pocketCard')
+          },
+          filters: {
+            transactionsDate: {
+              type: 'dateRange',
+              quickFilter: true,
+              props: {
+                label: i18n.tr('iwallet.cms.transactionsDate'),
+                clearable: true,
+                removeTime: true,
+                autoClose: true,
+                field: 'created_at'
+              }
+            }
           }
         },
         update: {

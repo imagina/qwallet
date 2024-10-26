@@ -12,8 +12,21 @@
       </div>
     </div>
     <!-- Description -->
-    <div class="text-caption text-blue-grey">
+    <div class="text-caption text-blue-grey q-mb-md">
       {{ row.description }}
+    </div>
+    <q-separator />
+    <!--Transactions summary-->
+    <div class="transactions-resume row">
+      <div :class="`col text-${transactions.income.color}`">
+        <q-icon :name="transactions.income.icon" />
+        {{ transactions.income.total }}
+      </div>
+      <q-separator vertical />
+      <div :class="`col text-${transactions.outcome.color}`">
+        <q-icon :name="transactions.outcome.icon" />
+        {{ transactions.outcome.total }}
+      </div>
     </div>
     <q-separator class="q-mb-xs" />
     <!-- Type & Actions -->
@@ -40,7 +53,26 @@ export default defineComponent({
     permitAction: { default: false },
     fieldActions: { default: false }
   },
-  components: {}
+  components: {},
+  computed: {
+    transactions ()
+    {
+      const income = this.row.toPocketTransactions.reduce((acc, item) => acc += item.amount, 0);
+      const outcome = this.row.fromPocketTransactions.reduce((acc, item) => acc += item.amount, 0);
+      return {
+        income: {
+          color: 'green',
+          icon: 'fa-solid fa-arrow-up',
+          total: `$ ${this.$trn(income)}`
+        },
+        outcome: {
+          color: 'red',
+          icon: 'fa-solid fa-arrow-down',
+          total: `$ ${this.$trn(outcome)}`
+        }
+      };
+    }
+  }
 });
 </script>
 
@@ -65,6 +97,20 @@ export default defineComponent({
         color: $blue-grey;
         font-weight: 300;
         margin-left: 8px;
+      }
+    }
+  }
+
+  .transactions-resume {
+    .col {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 15px;
+      font-weight: bold;
+
+      .q-icon {
+        margin-right: 8px;
       }
     }
   }
