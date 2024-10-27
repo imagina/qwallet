@@ -17,18 +17,27 @@
     </div>
     <q-separator />
     <!--Transactions summary-->
-    <div class="transactions-resume row">
-      <div :class="`col text-${transactions.income.color}`">
+    <div class="transactions-resume row q-mb-md">
+      <div :class="`section col text-${transactions.income.color}`">
         <q-icon :name="transactions.income.icon" />
-        {{ transactions.income.total }}
+        $ {{ $trn(transactions.income.total) }}
       </div>
       <q-separator vertical />
-      <div :class="`col text-${transactions.outcome.color}`">
+      <div :class="`section col text-${transactions.outcome.color}`">
         <q-icon :name="transactions.outcome.icon" />
-        {{ transactions.outcome.total }}
+        $ {{ $trn(transactions.outcome.total) }}
+      </div>
+      <div class="col-12">
+        <q-separator />
+      </div>
+      <div :class="`section col-12 text-${transactions.total.color}`">
+        <q-icon :name="transactions.total.icon" />
+        $ {{ $trn(transactions.total.total) }}
+      </div>
+      <div class="col-12">
+        <q-separator />
       </div>
     </div>
-    <q-separator class="q-mb-xs" />
     <!-- Type & Actions -->
     <div class="pocket__balance">
       <div class="stat-item row justify-between items-center">
@@ -59,16 +68,22 @@ export default defineComponent({
     {
       const income = this.row.toPocketTransactions.reduce((acc, item) => acc += item.amount, 0);
       const outcome = this.row.fromPocketTransactions.reduce((acc, item) => acc += item.amount, 0);
+      const total = income - outcome;
       return {
         income: {
           color: 'green',
           icon: 'fa-solid fa-arrow-up',
-          total: `$ ${this.$trn(income)}`
+          total: income
         },
         outcome: {
           color: 'red',
           icon: 'fa-solid fa-arrow-down',
-          total: `$ ${this.$trn(outcome)}`
+          total: outcome
+        },
+        total: {
+          color: total >= 0 ? 'green' : 'red',
+          icon: 'fa-light fa-money-bill-transfer',
+          total: total
         }
       };
     }
@@ -102,7 +117,7 @@ export default defineComponent({
   }
 
   .transactions-resume {
-    .col {
+    .section {
       display: flex;
       align-items: center;
       justify-content: center;
